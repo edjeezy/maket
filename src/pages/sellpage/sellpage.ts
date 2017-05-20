@@ -6,7 +6,7 @@ import * as firebase from 'firebase/app';
 const options: CameraOptions = {
   quality: 50,
   destinationType: 0,
-  mediaType: 0
+  encodingType: 0
 };
 
 @Component({
@@ -46,19 +46,18 @@ export class SellpagePage {
   UploadImage(imgbase64){
     let storage = firebase.storage();
     let storageRef = storage.ref()
-    let imgFolder = storageRef.child('images');
+    let imgName = new Date().getTime()
+    let imgFolder = storageRef.child(`images/${imgName}.png`);
     let toast = this.toastCtrl.create({
       message: 'Chargement en cours',
       duration: this.hideUploading
     });
     toast.present();
-    imgFolder.putString(imgbase64, 'base64')
+    imgFolder.putString(imgbase64, 'base64', { contentType: 'image/png' })
       .then(complete => toast.dismiss())
       .catch(error => alert(error));
 
   }
-  Uploading() {  
 
-  }
 
 }
