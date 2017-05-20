@@ -20,6 +20,7 @@ export class SellpagePage {
   negociable: boolean = true;
   prix:  number = 0;
   livraison: string = '';
+  img
   constructor(public toastCtrl: ToastController, public navCtrl: NavController, 
               public navParams: NavParams, public camera: Camera) {
   }
@@ -32,16 +33,13 @@ export class SellpagePage {
   addPhoto() {
     this.camera.getPicture(options).then((imageData) => {
     // TODO : Upload to Firebase
-     this.Uploading();
-     this.UploadImage(imageData);
-
-
+    this.img = imageData;
     console.log(imageData);
 }, (err) => {
  // Handle error
  alert('Erreur lors de la prise de la photo')
 });
-
+        this.UploadImage(this.img);
   }
 
   hideUploading = 1000000000;
