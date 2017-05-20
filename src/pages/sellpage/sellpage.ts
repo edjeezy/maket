@@ -32,9 +32,8 @@ export class SellpagePage {
   addPhoto() {
     this.camera.getPicture(options).then((imageData) => {
     // TODO : Upload to Firebase
-     let base64Image = 'data:image/jpeg;base64,' + imageData;
      this.Uploading();
-     this.UploadImage(base64Image);
+     this.UploadImage(imageData);
 
 
     console.log(imageData);
@@ -50,16 +49,18 @@ export class SellpagePage {
     let storage = firebase.storage();
     let storageRef = storage.ref()
     let imgFolder = storageRef.child('images');
-    imgFolder.putString(imgbase64, 'data_url').then(complete => this.hideUploading=0 );
-
-  }
-  Uploading() {
-    
     let toast = this.toastCtrl.create({
       message: 'Chargement en cours',
       duration: this.hideUploading
     });
     toast.present();
+    imgFolder.putString(imgbase64, 'base64')
+      .then(complete => toast.dismiss())
+      .catch(error => alert(error));
+
+  }
+  Uploading() {  
+
   }
 
 }
