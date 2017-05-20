@@ -2,9 +2,10 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { ToastController } from 'ionic-angular';
+import * as firebase from 'firebase/app';
 const options: CameraOptions = {
   quality: 50,
-  destinationType: 1,
+  destinationType: 0,
   mediaType: 0
 };
 
@@ -31,6 +32,11 @@ export class SellpagePage {
   addPhoto() {
     this.camera.getPicture(options).then((imageData) => {
     // TODO : Upload to Firebase
+     let base64Image = 'data:image/jpeg;base64,' + imageData;
+     this.Uploading();
+     this.UploadImage(base64Image);
+
+
     console.log(imageData);
 }, (err) => {
  // Handle error
@@ -38,7 +44,15 @@ export class SellpagePage {
 });
 
   }
+
   hideUploading = 1000000000;
+  UploadImage(imgbase64){
+    let storage = firebase.storage();
+    let storageRef = storage.ref()
+    let imgFolder = storageRef.child('images');
+    imgFolder.putString(imgbase64, 'data_url').then(complete => this.hideUploading=0 );
+
+  }
   Uploading() {
     
     let toast = this.toastCtrl.create({

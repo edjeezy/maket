@@ -18,12 +18,14 @@ export class LoginPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
   }
-
+ 
   signInWithFacebook() {
     if (this.platform.is('cordova')) {
       return this.fb.login(['email', 'public_profile']).then(res => {
         const facebookCredential = firebase.auth.FacebookAuthProvider.credential(res.authResponse.accessToken);
+        console.log(facebookCredential);
         return firebase.auth().signInWithCredential(facebookCredential);
+        
       })
     }
     else {
