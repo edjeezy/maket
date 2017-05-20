@@ -5,9 +5,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { TabsPage } from '../pages/tabs/tabs';
 
-import { AngularFireDatabase, FirebaseListObservable } from 'angularfire2/database';
 import { AngularFireAuth } from 'angularfire2/auth';
-import * as firebase from 'firebase/app';
+
 
 
 @Component({
@@ -33,6 +32,6 @@ export class MyApp {
     });
   }
 
-    items: FirebaseListObservable<any[]>;
+
 
 }
