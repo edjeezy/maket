@@ -1,0 +1,74 @@
+
+<ion-header>
+
+  <ion-toolbar color="primary">
+    <ion-title>Vendre</ion-title>
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content >
+  <ion-list>
+
+    <ion-item-divider color="dark">
+      <ion-label>Images</ion-label>
+    </ion-item-divider>
+    <ion-item>
+      <button ion-button color="dark" style="width : 100%" (click)="addPhoto()" >Ajouter Photo</button>
+    </ion-item>
+    <ion-item>
+      <ion-item> 1 image ajoutée</ion-item>
+    </ion-item>
+
+
+
+        <ion-item-divider color="dark">
+          <ion-label>Informations</ion-label>
+        </ion-item-divider>
+
+   <ion-item>
+    <ion-label>Type de produit</ion-label>
+      <ion-select>
+      <ion-option value="nes">Multimédia</ion-option>
+      <ion-option value="n64">Voiture / Moto</ion-option>
+      <ion-option value="ps">Immobilier</ion-option>
+      <ion-option value="genesis">Autre</ion-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label fixed>Titre</ion-label>
+    <ion-input type="text" [(ngModel)]="titre" ></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label fixed>Description</ion-label>
+    <ion-textarea type="text" [(ngModel)]="description"></ion-textarea>
+  </ion-item>
+  <ion-item>
+    <ion-label fixed>Prix</ion-label>
+    <ion-input type="number" [(ngModel)]="prix"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Négociable</ion-label>
+    <ion-checkbox color="dark" [checked]="negociable" ></ion-checkbox>
+  </ion-item>
+  <ion-item>
+  <ion-label>Etat</ion-label>
+    <ion-select [(ngModel)]="etat" >
+      <ion-option value="Ne pas afficher">Ne pas afficher</ion-option>
+      <ion-option value="Neuf">Neuf</ion-option>
+      <ion-option value="Occasion">Occasion</ion-option>
+      <ion-option value="A Réparer">A Réparer</ion-option>
+    </ion-select>
+  </ion-item>
+    <ion-item>
+      <ion-label>Livraison</ion-label>
+        <ion-select [(ngModel)]="livraison" >
+          <ion-option value="Ne pas afficher">Ne pas afficher</ion-option>
+          <ion-option value="A domicile">A domicile</ion-option>
+          <ion-option value="Rendez-vous">Rendez-vous</ion-option>
+        </ion-select>
+  </ion-item>
+</ion-list>
+</ion-content>
