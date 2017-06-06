@@ -2,12 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { ToastController } from 'ionic-angular';
-import * as firebase from 'firebase/app';
-const options: CameraOptions = {
-  quality: 50,
-  destinationType: 0,
-  encodingType: 0
-};
+import { SellPageService } from "./sellpage.service";
 
 @Component({
   selector: 'page-sellpage',
@@ -20,10 +15,19 @@ export class SellpagePage {
   negociable: boolean = true;
   prix:  number = 0;
   livraison: string = '';
-  img
-  constructor(public toastCtrl: ToastController, public navCtrl: NavController, 
-              public navParams: NavParams, public camera: Camera) {
-  }
+  img;
+  options: CameraOptions = {
+    quality: 40,
+    destinationType: this.camera.DestinationType.DATA_URL,
+    encodingType: this.camera.EncodingType.JPEG,
+    mediaType: this.camera.MediaType.PICTURE,
+    saveToPhotoAlbum: true
+  };
+  constructor(  public toastCtrl: ToastController, public navCtrl: NavController, 
+                public navParams: NavParams, public camera: Camera,
+                public sellservice: SellPageService) {
+  
+                }
 
 
   ionViewDidLoad() {
@@ -31,32 +35,37 @@ export class SellpagePage {
   }
 
   addPhoto() {
-    this.camera.getPicture(options).then((imageData) => {
-    // TODO : Upload to Firebase
-    this.img = imageData;
-    console.log(imageData);
-}, (err) => {
- // Handle error
- alert('Erreur lors de la prise de la photo')
-});
-        this.UploadImage(this.img);
+    if (this.sellservice.imgUploaded === 0) {
+          this.camera.getPicture(this.options).then((imageData) => {
+          // TODO : Upload to Firebase
+          this.img = "data:image/jpeg;base64," + imageData;
+          this.sellservice.UploadImage(this.img);
+          }, (err) => {
+          // Handle error
+          alert('Erreur lors de la prise de la photo')
+          });
+
+    } else {
+          this.sellservice.onlyOne();
+    }
+
   }
 
-  hideUploading = 1000000000;
-  UploadImage(imgbase64){
-    let storage = firebase.storage();
-    let storageRef = storage.ref()
-    let imgName = new Date().getTime()
-    let imgFolder = storageRef.child(`images/${imgName}.png`);
-    let toast = this.toastCtrl.create({
-      message: 'Chargement en cours',
-      duration: this.hideUploading
-    });
-    toast.present();
-    imgFolder.putString(imgbase64, 'base64', { contentType: 'image/png' })
-      .then(complete => toast.dismiss())
-      .catch(error => alert(error));
+  pushProduct() {
+    let timestamp = new Date().getTime();
+    let produit = {
+      "titre" : this.titre,
+      "description": this.description,
+      "etat": this.etat,
+      "negociable": this.negociable,
+      "prix": this.prix,
+      "livraison": this.livraison,
+      "imageUrl": this.sellservice.downloadUrl,
+      "timestamp": timestamp,
+      // TODO : Add user data
+    }
 
+    this.sellservice.uploadProductToFirebase(produit);
   }
 
 

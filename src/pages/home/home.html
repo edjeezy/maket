@@ -7,7 +7,7 @@
 
 <ion-content padding>
 
-  
+  <!--
   <ion-card>
     <img src="https://afrimarket.sn/22412-thickbox_default/jus-local-pasteurise-gingembre-ananas-15-l.jpg"/>
     <ion-card-content>
@@ -54,5 +54,42 @@
       </ion-item>
     </ion-card-content>
   </ion-card>
- 
+ -->
+
+  <ion-card *ngFor="let prod of produits | async">
+    <img [src]="prod.imageUrl"/>
+    <ion-card-content>
+      <ion-card-title>
+        {{prod.titre}}
+      </ion-card-title>
+      <p>
+        {{prod.description}}
+      </p>
+        <ion-item>
+          <ion-note item-left class="bold" color="primary" >Etat</ion-note>
+          <span item-right>{{prod.etat}}</span>
+      
+        </ion-item>
+        <ion-item>
+          <ion-note item-left clear class="bold" color="primary">Prix</ion-note>
+          <span item-right>{{prod.prix}}</span>
+        </ion-item>
+        <ion-item>
+          <ion-note item-left class="bold" color="primary">Livraison</ion-note>
+          <span item-right>{{prod.livraison}}</span>
+         
+        </ion-item>
+
+      <ion-item>
+         <button ion-button icon-left clear item-left (click)="buy(prod)">
+          <ion-icon name="cart"></ion-icon>
+          Acheter
+        </button>
+        <button ion-button icon-left clear item-right (click)="negocier(prod)" *ngIf="prod.negociable === true">
+          <ion-icon name="chatboxes"></ion-icon>
+          Négocier
+        </button>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

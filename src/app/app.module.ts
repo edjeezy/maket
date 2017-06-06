@@ -19,6 +19,8 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { Camera } from '@ionic-native/camera';
 import { LoginPage } from '../pages/login/login';
 import { Facebook } from '@ionic-native/facebook';
+import { SellPageService } from "../pages/sellpage/sellpage.service";
+import { LoginService } from "../pages/login/login.service";
 
 export const firebaseConfig ={
     apiKey: "AIzaSyAHLJ9VBoM844UP3hyscOOc_xtuYTl9IyE",
@@ -63,9 +65,12 @@ export const firebaseConfig ={
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
     Camera,
-    Facebook
+    Facebook,
+    SellPageService,
+    LoginService,
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+
   ]
 })
 export class AppModule {}

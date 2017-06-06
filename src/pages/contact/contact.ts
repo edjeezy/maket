@@ -9,8 +9,8 @@ import { AngularFireDatabase} from 'angularfire2/database';
 export class ContactPage {
    produits
   constructor(public navCtrl: NavController, public afDB : AngularFireDatabase) {
-    this.produits = this.afDB.list('/produits').subscribe(result => result);
-    console.log(this.produits);
+    this.produits = this.afDB.object('/produits').set({fuck : 'YOU'});
+    
   }
 
 }

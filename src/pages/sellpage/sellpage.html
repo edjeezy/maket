@@ -17,12 +17,6 @@
     <ion-item>
       <button ion-button color="dark" style="width : 100%" (click)="addPhoto()" >Ajouter Photo</button>
     </ion-item>
-    <ion-item>
-      <ion-item> 1 image ajoutée</ion-item>
-    </ion-item>
-
-
-
         <ion-item-divider color="dark">
           <ion-label>Informations</ion-label>
         </ion-item-divider>
@@ -69,6 +63,9 @@
           <ion-option value="A domicile">A domicile</ion-option>
           <ion-option value="Rendez-vous">Rendez-vous</ion-option>
         </ion-select>
+  </ion-item>
+  <ion-item>
+    <button ion-button color="primary" style="width : 100%" (click)="pushProduct()" >Vendre</button>
   </ion-item>
 </ion-list>
 </ion-content>
